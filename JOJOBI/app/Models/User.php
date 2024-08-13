@@ -62,7 +62,7 @@ class User extends Authenticatable
                 $user->uuid = (string) str::uuid(); // Generate UUID if not set
             }
         });
-        
+
     }
 
     /**
@@ -73,9 +73,36 @@ class User extends Authenticatable
     public static function generateUniqueIdentifier()
     {
         do {
-            $identifier = strtoupper(Str::random(5)); // Adjust the length as needed
+            $identifier = 'U' . strtoupper(Str::random(5)); // Adjust the length as needed
         } while (self::where('userid', $identifier)->exists());
 
         return $identifier;
+    }
+
+    /**
+     * Set the phone number with country code and ensure 11 digits.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setPhoneAttribute($value)
+    {
+        // Ensure phone number starts with +880 and is 11 digits long
+        $value = ltrim($value, '0'); // Remove leading zero if present
+        if (!str_starts_with($value, '+880')) {
+            $value = '+880' . $value;
+        }
+        $this->attributes['phone'] = $value;
+    }
+
+    /**
+     * Get the phone number with country code.
+     *
+     * @param string $value
+     * @return string
+     */
+    public function getPhoneAttribute($value)
+    {
+        return '+880' . ltrim($value, '+880');
     }
 }
