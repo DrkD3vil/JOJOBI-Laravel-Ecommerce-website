@@ -31,25 +31,40 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
    npm install
    npm run dev
    ```
+3. **Install Laravel Breeze**
+   Laravel Breeze is a minimal, simple implementation of all of Laravel's authentication features, including login, registration, password reset, email verification, and password confirmation. In addition, Breeze includes a simple "profile" page where the user may update their name, email address, and password.
+   ![alt text](https://laravel.com/img/docs/breeze-register.png)
 
-3. **Set Up Environment Variables**:
+   **Installation**
+   ```bash
+   composer require laravel/breeze --dev
+
+   php artisan breeze:install
+ 
+   php artisan migrate
+   npm install
+   npm run dev 
+   or npm build
+   ```
+
+4. **Set Up Environment Variables**:
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
-4. **Configure Database**:
+5. **Configure Database**:
    Update the `.env` file with your database information, then run:
    ```bash
    php artisan migrate
    ```
 
-5. **Serve the Application**:
+6. **Serve the Application**:
    ```bash
    php artisan serve
    ```
 
-6. **Access the Platform**:
+7. **Access the Platform**:
    Open your web browser and go to `http://localhost:8000` to access the JOJOBI e-commerce platform.
 
 ## Contribution

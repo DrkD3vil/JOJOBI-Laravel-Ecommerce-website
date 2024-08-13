@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -17,8 +18,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'userid',
+        'uuid',
         'name',
         'email',
+        'phone',
+        'address',
+        'profile_image',
+        'usertype',
+        'blocked',
         'password',
     ];
 
@@ -43,5 +51,31 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->userid = self::generateUniqueIdentifier();
+            if (!$user->uuid) {
+                $user->uuid = (string) str::uuid(); // Generate UUID if not set
+            }
+        });
+        
+    }
+
+    /**
+     * Generate a unique identifier.
+     *
+     * @return string
+     */
+    public static function generateUniqueIdentifier()
+    {
+        do {
+            $identifier = strtoupper(Str::random(5)); // Adjust the length as needed
+        } while (self::where('userid', $identifier)->exists());
+
+        return $identifier;
     }
 }
