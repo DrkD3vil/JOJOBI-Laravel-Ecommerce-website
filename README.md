@@ -8,6 +8,7 @@ JOJOBI is a Laravel-based e-commerce platform designed to facilitate easy online
 - **Secure Payment Gateways**: Provides safe and reliable payment processing to protect both merchants and customers.
 - **Effective Inventory Management**: Simplifies the tracking and management of stock levels, orders, and product listings.
 - **Customizable Storefront**: Allows businesses to personalize their online store to reflect their brand and attract customers.
+- **Optimized Admin Panel**: Streamlined dashboard for efficient store management and control.
 
 ## Benefits
 
@@ -19,10 +20,9 @@ JOJOBI is a Laravel-based e-commerce platform designed to facilitate easy online
 
 To install and set up the JOJOBI e-commerce platform, follow these steps:
 
-1. **Clone the Repository**:
+1. **Install Laravel**:
    ```bash
-   git clone https://github.com/yourusername/JOJOBI.git
-   cd JOJOBI
+   composer create-project laravel/laravel example-app
    ```
 
 2. **Install Dependencies**:
