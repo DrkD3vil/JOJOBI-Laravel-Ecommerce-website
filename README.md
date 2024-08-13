@@ -50,10 +50,10 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
 4. **Set Up Register and Login**:
    keep changing the JOJOBI\app\Http\Controllers\Auth\RegisteredUserController.php
 
-5. **Configure Database**:
-   Update the `.env` file with your database information, then run:
+5. **Configure Admin_Template**:
+   Download Admin Template, then run:
    ```bash
-   php artisan migrate
+   https://github.com/DrkD3vil/JOJOBI-Laravel-Ecommerce-website/tree/main/Admin_Template
    ```
 
 6. **Serve the Application**:
