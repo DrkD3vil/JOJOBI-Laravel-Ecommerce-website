@@ -74,7 +74,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 ## Contact
 
-For questions or support, please contact us at support@jojobi.com.
+For questions or support, please contact us at bijoydevpro@icloud.com 
 
 ---
 
