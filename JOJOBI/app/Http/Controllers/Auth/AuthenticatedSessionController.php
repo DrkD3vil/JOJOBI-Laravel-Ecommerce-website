@@ -25,10 +25,22 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
+        // If the user is blocked, redirect back with an error message
+        if ($request->user()->blocked) {
+            // Log the user out
+            Auth::logout();
+            // Redirect back with an error message
+            return redirect()->back()->withErrors(['email' => 'Your account has been blocked.']);
+        }
+        // If the user is not blocked, regenerate the session token and redirect to the intended route
         $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Redirect to the intended route based on the user's type (admin or regular user)
+        if($request->user()->usertype === 'admin')
+        {
+            return redirect()->route('admin.dashboard');
+        }
+        // If the user is a regular user, redirect to the dashboard
+        return redirect()->intended(route('dashboard'));
     }
 
     /**

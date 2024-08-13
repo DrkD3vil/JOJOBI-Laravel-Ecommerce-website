@@ -47,11 +47,8 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
    or npm build
    ```
 
-4. **Set Up Environment Variables**:
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
+4. **Set Up Register and Login**:
+   keep changing the JOJOBI\app\Http\Controllers\Auth\RegisteredUserController.php
 
 5. **Configure Database**:
    Update the `.env` file with your database information, then run:
