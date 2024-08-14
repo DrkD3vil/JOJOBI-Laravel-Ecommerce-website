@@ -21,6 +21,7 @@ JOJOBI is a Laravel-based e-commerce platform designed to facilitate easy online
 To install and set up the JOJOBI e-commerce platform, follow these steps:
 
 1. **Install Laravel**:
+
    ```bash
    composer create-project laravel/laravel example-app
    ```
@@ -36,14 +37,15 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
    ![alt text](https://laravel.com/img/docs/breeze-register.png)
 
    **Installation**
+
    ```bash
    composer require laravel/breeze --dev
 
    php artisan breeze:install
- 
+
    php artisan migrate
    npm install
-   npm run dev 
+   npm run dev
    or npm build
    ```
 
@@ -52,23 +54,30 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
 
 5. **Configure Admin_Template**:
    Download Admin Template, then run:
+
    ```bash
    https://github.com/DrkD3vil/JOJOBI-Laravel-Ecommerce-website/tree/main/Admin_Template
    ```
-   Add Template in public directory like 
+
+   Add Template in public directory like
+
    ```bash
    JOJOBI\public\adminfile
    ```
+
    Now, copy JOJOBI\public\adminfile\index.html to JOJOBI\resources\views\admin\index.blade.php
    After copying the template modify css and js files like this:
+
    ```bash
     <link rel="stylesheet" href="{{ asset('/adminfile/css/font.css') }}">
     <script src="{{ asset('/adminfile/vendor/jquery/jquery.min.js') }}"></script>
-    ```
-    in website :
-    ![alt text](https://i.ibb.co/qNHmjrR/Screenshot-14-8-2024-112156-127-0-0-1.jpg)
+   ```
+
+   in website :
+   ![alt text](https://i.ibb.co/qNHmjrR/Screenshot-14-8-2024-112156-127-0-0-1.jpg)
 
 6. **Serve the Application**:
+
    ```bash
    php artisan serve
    ```
@@ -86,11 +95,27 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 ## Contact
 
-For questions or support, please contact us at bijoydevpro@icloud.com 
+For questions or support, please contact us at bijoydevpro@icloud.com
 
 ---
 
 Thank you for choosing JOJOBI for your e-commerce needs. We hope our platform helps you create a successful and profitable online store!
 
-## Images
+## Steps to Workflow
 
+**Step 1: Add Product Category**
+in web.php file add product category wirh admin authorization
+Route::middleware(['auth', 'admin'])->group(function () {
+   'view_category',
+   'add_category',
+   'search_category',
+   'edit_category/{uuid}',
+   'update_category/{uuid}',
+   'delete_category/{uuid}',
+   'preview-pdf',
+   'download-pdf'
+});
+
+## Images
+**category images**
+![alt text](https://i.ibb.co/QCFj3M3/category.jpg)
