@@ -66,7 +66,7 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
     <script src="{{ asset('/adminfile/vendor/jquery/jquery.min.js') }}"></script>
     ```
     in website :
-    [text](https://ibb.co/8ryPs7j)
+    ![alt text](https://i.ibb.co/qNHmjrR/Screenshot-14-8-2024-112156-127-0-0-1.jpg)
 
 6. **Serve the Application**:
    ```bash
