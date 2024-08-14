@@ -55,6 +55,18 @@ To install and set up the JOJOBI e-commerce platform, follow these steps:
    ```bash
    https://github.com/DrkD3vil/JOJOBI-Laravel-Ecommerce-website/tree/main/Admin_Template
    ```
+   Add Template in public directory like 
+   ```bash
+   JOJOBI\public\adminfile
+   ```
+   Now, copy JOJOBI\public\adminfile\index.html to JOJOBI\resources\views\admin\index.blade.php
+   After copying the template modify css and js files like this:
+   ```bash
+    <link rel="stylesheet" href="{{ asset('/adminfile/css/font.css') }}">
+    <script src="{{ asset('/adminfile/vendor/jquery/jquery.min.js') }}"></script>
+    ```
+    in website :
+    [text](https://ibb.co/8ryPs7j)
 
 6. **Serve the Application**:
    ```bash
@@ -79,3 +91,6 @@ For questions or support, please contact us at bijoydevpro@icloud.com
 ---
 
 Thank you for choosing JOJOBI for your e-commerce needs. We hope our platform helps you create a successful and profitable online store!
+
+## Images
+
