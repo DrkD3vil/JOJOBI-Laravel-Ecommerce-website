@@ -18,6 +18,15 @@
         <li>
             <a href="{{ route('admin.category') }}"> <i class="icon-grid"></i>Category </a>
         </li>
+        <li>
+        <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> 
+            <i class="icon-windows"></i>Products 
+        </a>
+        <ul id="exampledropdownDropdown" class="collapse list-unstyled">
+            <li><a href="{{ route('admin.product.add') }}">Add Products</a></li>
+            <li><a href="{{ route('admin.product.view') }}">All Products</a></li>
+        </ul>
+    </li>
         <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
         <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
         <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
@@ -28,6 +37,7 @@
                 <li><a href="#">Page</a></li>
             </ul>
         </li>
+
         <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>
     </ul><span class="heading">Extras</span>
     <ul class="list-unstyled">

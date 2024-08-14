@@ -33,3 +33,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('preview-pdf', [AdminController::class, 'previewCategoriesPDF'])->name('admin.preview-pdf');
     Route::get('download-pdf', [AdminController::class, 'downloadCategoriesPDF'])->name('admin.download-pdf');
 });
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('add_product', [AdminController::class, 'add_product'])->name('admin.product.add');
+    Route::post('upload_product', [AdminController::class, 'upload_product'])->name('admin.product.upload');
+    Route::get('view_product', [AdminController::class, 'view_product'])->name('admin.product.view');
+    Route::get('search_product', [AdminController::class, 'search_product'])->name('admin.product.search');
+    Route::get('delete_product/{uuid}', [AdminController::class, 'delete_product'])->name('admin.product.delete');
+    Route::get('update_product/{uuid}', [AdminController::class, 'update_product'])->name('admin.product.update');
+    Route::post('edit_product/{uuid}', [AdminController::class, 'edit_product'])->name('admin.product.edit');
+});
