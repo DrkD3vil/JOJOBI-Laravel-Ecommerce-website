@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -118,7 +119,7 @@ class AdminController extends Controller
         return $pdf->download('categories-list.pdf');
     }
 
-    
+
     // ADD PRODUCT
     public function add_product()
     {
@@ -365,6 +366,160 @@ class AdminController extends Controller
         // Download the PDF
         return $pdf->download('product-details.pdf');
     }
+
+
+     // User 
+     public function view_user()
+     {
+         // Fetch users and admins separately
+         $users = User::where('usertype', 'user')->paginate(10);
+ 
+         // Check if both are empty
+         if ($users->isEmpty()) {
+             return redirect()->back()->with('error', 'No users found');
+         }
+         return view('admin.view_user', compact('users'));
+     }
+ 
+ 
+     // User Search
+     public function search_user(Request $request)
+     {
+         $searchTerm = $request->input('search_term');
+         $dateInput = $request->input('search_date');
+         $query = User::query(); // Querying User model
+ 
+         if (!empty($searchTerm)) {
+             $query->where(function ($query) use ($searchTerm) {
+                 $query->where('userid', 'like', '%' . $searchTerm . '%')
+                     ->orWhere('name', 'like', '%' . $searchTerm . '%')
+                     ->orWhere('email', 'like', '%' . $searchTerm . '%')
+                     ->orWhere('phone', 'like', '%' . $searchTerm . '%');
+             });
+         }
+ 
+         if ($dateInput) {
+             try {
+                 // Parse the date using the format 'Y-m-d'
+                 $parsedDate = Carbon::createFromFormat('Y-m-d', $dateInput)->format('Y-m-d');
+                 $query->whereDate('created_at', $parsedDate);
+             } catch (\Exception $e) {
+                 // Handle invalid date format
+                 return redirect()->back()->with('error', 'Invalid date format.');
+             }
+         }
+ 
+         try {
+             $users = $query->paginate(10);
+         } catch (\Exception $e) {
+             Log::error('Search query failed: ' . $e->getMessage());
+             return redirect()->back()->with('error', 'An error occurred while performing the search. Please try again.');
+         }
+ 
+         // Return view with searched users
+         return view('admin.view_user', compact('users'));
+     }
+ 
+     // Admin view
+     public function view_admin()
+     {
+         // Fetch users and admins separately
+ 
+         $admins = User::where('usertype', 'admin')->paginate(10);
+ 
+         // Check if both are empty
+         if ($admins->isEmpty()) {
+             return redirect()->back()->with('error', 'No  admins found');
+         }
+ 
+         return view('admin.view_admin', compact('admins'));
+     }
+ 
+     // Admin Search
+ 
+     public function search_admin(Request $request)
+ {
+     $searchTerm = $request->input('search_term');
+     $dateInput = $request->input('search_date');
+ 
+     $query = User::where('usertype', 'admin'); // Querying User model for admin users
+ 
+     if (!empty($searchTerm)) {
+         $query->where(function ($query) use ($searchTerm) {
+             $query->where('id', 'like', '%' . $searchTerm . '%')
+                   ->orWhere('name', 'like', '%' . $searchTerm . '%')
+                   ->orWhere('email', 'like', '%' . $searchTerm . '%')
+                   ->orWhere('phone', 'like', '%' . $searchTerm . '%');
+         });
+     }
+ 
+     if ($dateInput) {
+         try {
+             // Parse the date using the format 'Y-m-d'
+             $parsedDate = Carbon::createFromFormat('Y-m-d', $dateInput)->format('Y-m-d');
+             $query->whereDate('created_at', $parsedDate);
+         } catch (\Exception $e) {
+             // Handle invalid date format
+             return redirect()->back()->with('error', 'Invalid date format.');
+         }
+     }
+ 
+     try {
+         $admins = $query->paginate(10);
+     } catch (\Exception $e) {
+         Log::error('Search query failed: ' . $e->getMessage());
+         return redirect()->back()->with('error', 'An error occurred while performing the search. Please try again.');
+     }
+ 
+     // Return view with searched admins
+     return view('admin.view_admin', compact('admins'));
+ }
+ 
+     //   Delete a User
+     public function delete_user($uuid)
+     {
+         $data = User::where('uuid', $uuid)->firstOrFail();
+         if ($data) {
+             $data->delete();
+             return redirect()->back()->with('success', 'User deleted successfully');
+         } else {
+             return redirect()->back()->with('error', 'User not found');
+         }
+     }
+ 
+     public function update_user($uuid)
+     {
+         $data = User::where('uuid', $uuid)->firstOrFail();
+         return view('admin.update_user', compact('data'));
+     }
+ 
+     public function edit_user(Request $request, $uuid)
+     {
+         $request->validate([
+             'name' => 'string|max:255',
+             'email' => 'email|max:255',
+             'phone' => 'string|max:15',
+             'address' => 'string|max:255',
+             'usertype' => 'string|max:255',
+         ]);
+ 
+         $user = User::where('uuid', $uuid)->firstOrFail();
+         $user->update([
+             'name' => $request->input('name'),
+             'email' => $request->input('email'),
+             'phone' => $request->input('phone'),
+             'address' => $request->input('address'),
+             'usertype' => $request->input('usertype'),
+             'blocked' => $request->has('blocked'),
+         ]);
+ 
+         // Redirect to different routes based on a condition (e.g., usertype)
+         if ($user->usertype === 'admin') {
+             return redirect()->route('admin.admin.view')->with('success', 'Admin user updated successfully.');
+         } else {
+             return redirect()->route('admin.user.view')->with('success', 'User updated successfully.');
+         }
+     }
 
 
 
