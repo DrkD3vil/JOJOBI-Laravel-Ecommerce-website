@@ -22,4 +22,7 @@ class HomeController extends Controller
         ];
         return view('admin.index', compact('totalUsers', 'totalProducts','progressPercentages'));
     }
+    public function home(){
+        return view('home.index');
+    }
 }
