@@ -1,1 +1,61 @@
 /* your styles go here */
+
+.btn1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    color: #495057;
+    text-decoration: none;
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin: 0 5px;
+}
+
+.btn1:hover {
+    background-color: #18ffff;
+    color: #212529;
+}
+
+.btn1:active {
+    border-color: #01ff7c 1px solid;
+    color: #212529;
+}
+
+.btn1 i {
+    margin: 0;
+}
+
+.btn-edit {
+    color: #0d6efd; /* Blue for edit */
+}
+
+.btn-edit:hover {
+    color: #0b5ed7;
+}
+
+.btn-delete {
+    color: #dc3545; /* Red for delete */
+}
+
+.btn-delete:hover {
+    color: #c82333;
+}
+
+.btn-preview {
+    color: #198754; /* Green for preview */
+}
+
+.btn-preview:hover {
+    color: #157347;
+}
+
+.btn-download {
+    color: #ffc107; /* Yellow for download */
+}
+
+.btn-download:hover {
+    color: #e0a800;
+}

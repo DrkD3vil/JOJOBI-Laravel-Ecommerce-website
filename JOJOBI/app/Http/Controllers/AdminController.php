@@ -12,13 +12,12 @@ use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
-    //
+    // VIEW CATEGORIES
     public function view_category()
     {
         $data = Category::paginate(10);
         return view('admin.category', compact('data'));
     }
-
     // Add Category
     public function add_category(Request $request)
     {
@@ -37,7 +36,6 @@ class AdminController extends Controller
         // Redirect with success message
         return redirect()->route('admin.category')->with('success', 'Category added successfully');
     }
-
     // Delete category
     public function delete_category($uuid)
     {
@@ -50,14 +48,12 @@ class AdminController extends Controller
         // Redirect with success message
         return redirect('/view_category')->with('success', 'Category deleted successfully');
     }
-
     // Edit Category
     public function edit_category($uuid)
     {
         $data = Category::where('uuid', $uuid)->firstOrFail();
         return view('admin.edit_category', compact('data'));
     }
-
     // Update Category
     public function update_category(Request $request, $uuid)
     {
@@ -103,8 +99,7 @@ class AdminController extends Controller
 
         return view('admin.category', compact('data'));
     }
-
-    // Export Categories
+    // PREVIEW CATEGORY
     public function previewCategoriesPDF()
     {
         $categories = Category::all();
@@ -113,7 +108,7 @@ class AdminController extends Controller
         // Render the PDF in the browser
         return $pdf->stream('categories-preview.pdf');
     }
-
+    // Export Categories
     public function downloadCategoriesPDF()
     {
         $categories = Category::all();
@@ -123,13 +118,15 @@ class AdminController extends Controller
         return $pdf->download('categories-list.pdf');
     }
 
+    
+    // ADD PRODUCT
     public function add_product()
     {
         // Fetch categories to populate the category dropdown
         $categories = Category::all();
         return view('admin.add_product', compact('categories'));
     }
-
+    // UPLOAD PRODUCT
     public function upload_product(Request $request)
     {
         // Validate the request data
@@ -180,14 +177,13 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Product added successfully');
     }
-
-
+    // VIEW PRODUCTS
     public function view_product()
     {
         $products = Product::with('category')->paginate(10);
         return view('admin.view_product', compact('products'));
     }
-
+    // SEARCH PRODUCTS
     public function search_product(Request $request)
     {
         $searchTerm = $request->input('search_term');
@@ -224,24 +220,23 @@ class AdminController extends Controller
 
         return view('admin.view_product', compact('products'));
     }
-
     //   Delete a product
     public function delete_product($uuid)
     {
         $data = Product::where('uuid', $uuid)->first();
-    
+
         if ($data) {
             // Optional: delete associated cart entries if needed
             // DB::table('carts')->where('product_id', $uuid)->delete();
-    
+
             // Check if the product has an associated image
             if (!empty($data->product_image)) {
                 // Get the image path
                 $image_path = public_path($data->product_image);
-    
+
                 // Log the image path for troubleshooting
                 Log::info('Attempting to delete image at path: ' . $image_path);
-    
+
                 // Check if the file exists
                 if (file_exists($image_path)) {
                     // Attempt to delete the file
@@ -251,7 +246,7 @@ class AdminController extends Controller
                     } catch (\Exception $e) {
                         // Log the error message for troubleshooting
                         Log::error('Failed to delete image: ' . $e->getMessage());
-    
+
                         // Redirect back with error message
                         return redirect()->back()->with('error', 'Failed to delete product image.');
                     }
@@ -260,10 +255,10 @@ class AdminController extends Controller
                     Log::warning('File not found at path: ' . $image_path);
                 }
             }
-    
+
             // Delete the product record
             $data->delete();
-    
+
             // Redirect back with success message
             return redirect()->back()->with('success', 'Product deleted successfully');
         } else {
@@ -271,11 +266,7 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Product not found');
         }
     }
-    
-
-
     // Update product
-
     public function update_product($uuid)
     {
         $product = Product::where('uuid', $uuid)->firstOrFail();
@@ -283,11 +274,11 @@ class AdminController extends Controller
 
         return view('admin.update_product', compact('product', 'categories'));
     }
-
+    // EDIT ONLY THIS PRODUCT
     public function edit_product(Request $request, $uuid)
     {
         $data = Product::where('uuid', $uuid)->firstOrFail();
-    
+
         // Validate the request
         $request->validate([
             'product_barcode' => 'required|string|max:255',
@@ -302,7 +293,7 @@ class AdminController extends Controller
             'is_new' => 'nullable|boolean',
             'is_on_discount' => 'nullable|boolean'
         ]);
-    
+
         // Update product details
         $data->product_barcode = $request->product_barcode;
         $data->product_name = $request->product_name;
@@ -314,27 +305,66 @@ class AdminController extends Controller
         $data->quantity = $request->product_quantity;
         $data->is_new = $request->has('is_new');
         $data->is_on_discount = $request->has('is_on_discount');
-    
+
         // Handle image upload
         if ($request->hasFile('product_image')) {
             // Delete the old image if it exists
             if ($data->product_image && File::exists(public_path($data->product_image))) {
                 File::delete(public_path($data->product_image));
             }
-    
+
             // Save the new image
             $image = $request->file('product_image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('product_images'), $imageName);
             $data->product_image = 'product_images/' . $imageName;
         }
-    
+
         // Save the updated product
         $data->save();
-    
+
         return redirect()->back()->with('success', 'Product updated successfully');
     }
-    
+    // PREVIEW PRODUCTS
+    public function previewProductsPDF()
+    {
+        $products = Product::all();
+        $pdf = PDF::loadView('admin.products-pdf', compact('products'))
+            ->setPaper('a4', 'landscape'); // Set paper size to A4 and orientation to landscape
+
+        // Render the PDF in the browser
+        return $pdf->stream('products-preview.pdf');
+    }
+    // EXPORT PRODUCTS
+    public function downloadProductsPDF()
+    {
+        $products = Product::all();
+        $pdf = PDF::loadView('admin.products-pdf', compact('products'))
+            ->setPaper('a4', 'landscape'); // Set paper size to A4 and orientation to landscape
+
+        // Download the PDF
+        return $pdf->download('products-list.pdf');
+    }
+    // PREVIEW ONLY THIS PRODUCT
+    public function previewSingleProductPDF($uuid)
+    {
+        $product = Product::where('uuid', $uuid)->firstOrFail();
+        $pdf = PDF::loadView('admin.singleProduct-pdf', compact('product'))
+            ->setPaper('a4'); // Set paper size to A4 and orientation to landscape
+
+        // Render the PDF in the browser
+        return $pdf->stream('product-preview.pdf');
+    }
+    // EXPORT ONLY THIS PRODUCT
+    public function downloadSingleProductPDF($uuid)
+    {
+        $product = Product::where('uuid', $uuid)->firstOrFail();
+        $pdf = PDF::loadView('admin.singleProduct-pdf', compact('product'))
+            ->setPaper('a4'); // Set paper size to A4 and orientation to landscape
+
+        // Download the PDF
+        return $pdf->download('product-details.pdf');
+    }
 
 
 

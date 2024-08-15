@@ -186,6 +186,11 @@
     <p class="text-center">Total results found: {{ $products->total() }}</p>
 @endif
 
+<h1>PDF Actions</h1>
+<a href="{{ route('admin.products.preview-pdf') }}" target="_blank">Preview products PDF</a>
+<br>
+<a href="{{ route('admin.products.download-pdf') }}">Download products PDF</a>
+
 <!-- Category Table -->
 <div class="table-container">
     <table class="table-deg">
@@ -212,7 +217,7 @@
                     <td>{{ $item->product_barcode }}</td>
                     <td>{!! Str::limit($item->product_name, 50) !!}</td>
                     <td>{!! Str::limit($item->categoryid) !!}</td>
-                    
+
                     <td>{{ $item->category->category_name ?? 'N/A' }}</td> <!-- Display category name -->
 
                     <td><img src="{{ asset($item->product_image) }}" alt="{{ $item->product_name }}" width="100"></td>
@@ -222,9 +227,21 @@
                     <td>{{ $item->quantity }}</td>
                     <td>{{ \Carbon\Carbon::parse($item->created_at)->format('F d, Y h:i A') }}</td>
                     <td>
-                        <a class="btn btn-success" href="{{ url('update_product', $item->uuid) }}">Update</a>
-                        <a class="btn btn-danger" onclick="confirmation(event)"
-                            href="{{ url('delete_product', $item->uuid) }}">Delete</a>
+                        <a class="btn1 btn-edit" href="{{ url('update_product', $item->uuid) }}">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn1 btn-delete" onclick="confirmation(event)"
+                            href="{{ url('delete_product', $item->uuid) }}">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                        <a class="btn1 btn-preview" href="{{ route('admin.singleProduct.preview-pdf', $item->uuid) }}"
+                            target="_blank">
+                            <i class="bi bi-eye-fill"></i>
+                        </a>
+                        <a class="btn1 btn-download" href="{{ route('admin.singleProduct.download-pdf', $item->uuid) }}"
+                            target="_blank">
+                            <i class="bi bi-cloud-download"></i>
+                        </a>
                     </td>
                 </tr>
             @endforeach

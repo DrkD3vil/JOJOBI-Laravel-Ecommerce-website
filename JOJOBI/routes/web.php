@@ -42,4 +42,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('delete_product/{uuid}', [AdminController::class, 'delete_product'])->name('admin.product.delete');
     Route::get('update_product/{uuid}', [AdminController::class, 'update_product'])->name('admin.product.update');
     Route::post('edit_product/{uuid}', [AdminController::class, 'edit_product'])->name('admin.product.edit');
+    Route::get('preview-products-pdf', [AdminController::class, 'previewProductsPDF'])->name('admin.products.preview-pdf');
+    Route::get('download-products-pdf', [AdminController::class, 'downloadProductsPDF'])->name('admin.products.download-pdf');
+    Route::get('product/{uuid}/preview-pdf', [AdminController::class, 'previewSingleProductPDF'])->name('admin.singleProduct.preview-pdf');
+    Route::get('product/{uuid}/download-pdf', [AdminController::class, 'downloadSingleProductPDF'])->name('admin.singleProduct.download-pdf');
+});
+
+Route::middleware(['auth', 'admin'])->group(function(){
+    Route::get('view_user', [AdminController::class, 'view_user'])->name('admin.user.view');
+    Route::get('view_admin', [AdminController::class, 'view_admin'])->name('admin.admin.view');
+
+    Route::get('search_user', [AdminController::class, 'search_user'])->name('admin.user.search');
+    Route::get('search_admin', [AdminController::class, 'search_admin'])->name('admin.admin.search');
+
+    Route::get('delete_user/{uuid}', [AdminController::class, 'delete_user'])->name('admin.user.delete');
+    Route::get('delete_admin/{uuid}', [AdminController::class, 'delete_user'])->name('admin.admin.delete');
+
+    Route::get('update_user/{uuid}', [AdminController::class, 'update_user'])->name('admin.user.update');
+    Route::put('edit_user/{uuid}', [AdminController::class, 'edit_user'])->name('admin.user.edit');
+
 });

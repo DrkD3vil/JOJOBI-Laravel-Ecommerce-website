@@ -1,24 +1,30 @@
 <nav id="sidebar">
     <!-- Sidebar Header-->
-    <div class="sidebar-header d-flex align-items-center">
-        <div class="avatar"><img src="{{ asset('/adminfile/img/avatar-6.jpg') }}" alt="..."
-                class="img-fluid rounded-circle"></div>
-        <div class="title">
-            <h1 class="h5">Mark Stephen</h1>
-            <p>Web Designer</p>
-        </div>
+    <!-- Sidebar Header-->
+<div class="sidebar-header d-flex align-items-center">
+    <div class="avatar"><img src="img/avatar-6.jpg" alt="..." class="img-fluid rounded-circle"></div>
+    <div class="title">
+        <h1 class="h5">Mark Stephen</h1>
+        <p>Web Designer</p>
     </div>
-    <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
-    <ul class="list-unstyled">
-        <li class="active">
-            <a href="{{ route('admin.dashboard') }}">
-                <i class="icon-home"></i> Home
-            </a>
-        </li>
-        <li>
-            <a href="{{ route('admin.category') }}"> <i class="icon-grid"></i>Category </a>
-        </li>
-        <li>
+</div>
+
+@php
+    function isActive($route) {
+        return request()->routeIs($route) ? 'active' : '';
+    }
+@endphp
+
+<!-- Sidebar Navigation Menus -->
+<span class="heading">Main</span>
+<ul class="list-unstyled sidebar-nav">
+    <li class="{{ request()->is('index.html') ? 'active' : '' }}">
+        <a href="{{ route('admin.dashboard') }}"> <i class="icon-home"></i>Home </a>
+    </li>
+    <li class="{{ isActive('admin.category') }}">
+        <a href="{{ route('admin.category') }}"> <i class="icon-grid"></i>Category </a>
+    </li>
+    <li class="{{ request()->is('exampledropdownDropdown*') ? 'active' : '' }}">
         <a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> 
             <i class="icon-windows"></i>Products 
         </a>
@@ -27,22 +33,28 @@
             <li><a href="{{ route('admin.product.view') }}">All Products</a></li>
         </ul>
     </li>
-        <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
-        <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
-        <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i
-                    class="icon-windows"></i>Example dropdown </a>
-            <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-            </ul>
-        </li>
+    <li class="{{ request()->is('exampledropdownDropdown*') ? 'active' : '' }}">
+        <a href="#exampledropdownDropdownUsers" aria-expanded="false" data-toggle="collapse"> 
+            <i class="icon-logout"></i>Users 
+        </a>
+        <ul id="exampledropdownDropdownUsers" class="collapse list-unstyled">
+            <li><a href="{{ route('admin.user.view') }}">Users</a></li>
+            <li><a href="{{ route('admin.admin.view') }}">Admins</a></li>
+        </ul>
+    </li>
+</ul>
 
-        <li><a href="login.html"> <i class="icon-logout"></i>Login page </a></li>
-    </ul><span class="heading">Extras</span>
-    <ul class="list-unstyled">
-        <li> <a href="#"> <i class="icon-settings"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a></li>
-        <li> <a href="#"> <i class="icon-chart"></i>Demo </a></li>
-    </ul>
+<span class="heading">Extras</span>
+<ul class="list-unstyled sidebar-nav">
+    <li class="{{ request()->is('demo') ? 'active' : '' }}">
+        <a href="#"> <i class="icon-settings"></i>Demo </a>
+    </li>
+    <li class="{{ request()->is('demo') ? 'active' : '' }}">
+        <a href="#"> <i class="icon-writing-whiteboard"></i>Demo </a>
+    </li>
+    <li class="{{ request()->is('demo') ? 'active' : '' }}">
+        <a href="#"> <i class="icon-chart"></i>Demo </a>
+    </li>
+</ul>
+
 </nav>
