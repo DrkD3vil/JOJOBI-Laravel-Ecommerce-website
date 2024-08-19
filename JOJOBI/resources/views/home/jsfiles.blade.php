@@ -164,3 +164,11 @@
 	<script src="{{ asset('homefile/js/bootstrap.js') }}"></script>
 	<!-- //for bootstrap working -->
 	<!-- //js-files -->
+
+	@stack('scripts');
+
+
+
+
+
+

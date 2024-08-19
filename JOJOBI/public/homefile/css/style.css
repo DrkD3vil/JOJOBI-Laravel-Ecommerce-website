@@ -585,6 +585,7 @@ button.w3view-cart {
 }
 .product-men {
     margin-top: 2em;
+    height: 25rem;
 }
 .men-pro-item {
     position: relative;
@@ -4876,3 +4877,13 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 /*--//responsive--*/
+
+.product-title {
+    white-space: nowrap;       /* Prevent line breaks */
+    overflow: hidden;          /* Hide overflowed text */
+    text-overflow: ellipsis;   /* Show ellipsis for overflowed text */
+}
+.show-more-container{
+    text-align: center;
+    
+}

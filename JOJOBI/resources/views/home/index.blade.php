@@ -14,7 +14,7 @@
 	@include('home.locator')
 	<!-- //shop locator (popup) -->
 	<!-- signin Model -->
-	@include('home.signin_signup_model')
+	@include('home.signin_model')
 	<!-- //signup Model -->
 	<!-- //header-bot -->
 	<!-- navigation -->

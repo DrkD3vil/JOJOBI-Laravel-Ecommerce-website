@@ -6,9 +6,13 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/products/{categoryid}', [HomeController::class, 'allProductsByCategory'])->name('allProducts');
+Route::get('productdetail/{uuid}', [HomeController::class, 'productdetail'])->name('product.detail');
+Route::get('/checkout', [HomeController::class, 'productcheckout'])->name('product.checkout');
+
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('home.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

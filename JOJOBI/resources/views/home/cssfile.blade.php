@@ -24,3 +24,4 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<link rel="stylesheet" type="text/css" href="{{ asset('homefile/css/jquery-ui1.css') }}">
 	<!-- fonts -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">

@@ -35,7 +35,7 @@
 						<div class="collapse navbar-collapse menu--shylock" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav menu__list">
 								<li class="active">
-									<a class="nav-stylehead" href="index.html">Home
+									<a class="nav-stylehead" href="{{ route('home')}}">Home
 										<span class="sr-only">(current)</span>
 									</a>
 								</li>
