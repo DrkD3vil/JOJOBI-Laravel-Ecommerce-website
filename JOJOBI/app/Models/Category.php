@@ -43,4 +43,9 @@ class Category extends Model
 
         return $identifier;
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'categoryid', 'categoryid');
+    }
 }

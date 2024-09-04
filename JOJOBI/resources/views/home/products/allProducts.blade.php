@@ -1,6 +1,23 @@
 @extends('home.layout')
 
 @section('content')
+<div class="services-breadcrumb">
+    <div class="agile_inner_breadcrumb">
+        <div class="container">
+            <ul class="w3_short">
+                <li>
+                    <a href="{{ route('home') }}">Home</a>
+                    <i>|</i>
+                    @if (session('came_from_all_products') && isset($product->categoryid))
+                        <a href="{{ route('allProducts', ['categoryid' => $product->categoryid]) }}">Products</a>
+                        <i>|</i>
+                    @endif
+                </li>
+                <li> {{ $category->category_name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
     <div class="container">
         <h1 class="text-center my-4">All Products in {{ $category->category_name }}</h1>
 
@@ -13,7 +30,7 @@
         </div>
 
         @if ($products->hasMorePages())
-            <div class="text-center my-4">
+            <div class=" show-more-container text-center my-4">
                 <button id="load-more" data-next-page="{{ $products->currentPage() + 1 }}" class="btn btn-primary">Load More</button>
             </div>
         @endif

@@ -4883,7 +4883,21 @@ input[type="radio"], input[type="checkbox"] {
     overflow: hidden;          /* Hide overflowed text */
     text-overflow: ellipsis;   /* Show ellipsis for overflowed text */
 }
-.show-more-container{
-    text-align: center;
+.product-sec1 {
+    display: flex;
+    flex-direction: column;
     
 }
+
+.content_product {
+    flex: 1; /* Allows content to grow and push the button to the bottom */
+}
+
+.show-more-container {
+    text-align: center;
+    margin-top: 20px; /* Adds space above the button */
+    padding-bottom: 20px; /* Adds space below the button */
+}
+
+
+

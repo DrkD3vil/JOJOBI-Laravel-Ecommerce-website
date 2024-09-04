@@ -13,7 +13,7 @@
                         <i>|</i>
                     @endif
                 </li>
-                <li>Single Page</li>
+                <li>{{$product->product_name}}</li>
             </ul>
         </div>
     </div>
@@ -24,7 +24,7 @@
 <div class="banner-bootom-w3-agileits">
     <div class="container">
         <!-- tittle heading -->
-        <h3 class="tittle-w3l">Single Page
+        <h3 class="tittle-w3l">{{$product->product_name}}
             <span class="heading-style">
                 <i></i>
                 <i></i>
@@ -36,43 +36,10 @@
             <img src="{{ asset($product->product_image) }}" alt="" style="width: 25rem">
         </div>
         <div class="col-md-7 single-right-left simpleCart_shelfItem">
-            <h3>{{$product->product_name}}</h3>
-            <div class="rating1">
-                <span class="starRating">
-                    <input id="rating5" type="radio" name="rating" value="5">
-                    <label for="rating5">5</label>
-                    <input id="rating4" type="radio" name="rating" value="4">
-                    <label for="rating4">4</label>
-                    <input id="rating3" type="radio" name="rating" value="3" checked="">
-                    <label for="rating3">3</label>
-                    <input id="rating2" type="radio" name="rating" value="2">
-                    <label for="rating2">2</label>
-                    <input id="rating1" type="radio" name="rating" value="1">
-                    <label for="rating1">1</label>
-                </span>
-            </div>
+        
             <p>
-                <span class="item_price">$950.00</span>
-                <del>$1300.00</del>
-                <label>Free delivery</label>
+                <span class="item_price">&#2547;{{$product->sell_price}}</span>
             </p>
-            <div class="single-infoagile">
-                <ul>
-                    <li>
-                        Cash on Delivery Eligible.
-                    </li>
-                    <li>
-                        Shipping Speed to Delivery.
-                    </li>
-                    <li>
-                        Sold and fulfilled by Supple Tek (3.6 out of 5 | 8 ratings).
-                    </li>
-                    <li>
-                        1 offer from
-                        <span class="item_price">$950.00</span>
-                    </li>
-                </ul>
-            </div>
             <div class="product-single-w3l">
                 <p>
                     <i class="fa fa-hand-o-right" aria-hidden="true"></i>This is a
@@ -105,8 +72,8 @@
                             <input type="hidden" name="cmd" value="_cart" />
                             <input type="hidden" name="add" value="1" />
                             <input type="hidden" name="business" value=" " />
-                            <input type="hidden" name="item_name" value="Zeeba Premium Basmati Rice - 5 KG" />
-                            <input type="hidden" name="amount" value="950.00" />
+                            <input type="hidden" name="item_name" value="{{$product->product_name}}" />
+                            <input type="hidden" name="amount" value="{{$product->sell_price}}" />
                             <input type="hidden" name="discount_amount" value="1.00" />
                             <input type="hidden" name="currency_code" value="USD" />
                             <input type="hidden" name="return" value=" " />
