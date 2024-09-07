@@ -36,30 +36,21 @@
             <img src="{{ asset($product->product_image) }}" alt="" style="width: 25rem">
         </div>
         <div class="col-md-7 single-right-left simpleCart_shelfItem">
-        
+
             <p>
                 <span class="item_price">&#2547;{{$product->sell_price}}</span>
             </p>
             <div class="product-single-w3l">
                 <p>
-                    <i class="fa fa-hand-o-right" aria-hidden="true"></i>This is a
-                    <label>Vegetarian</label> product.
+                    <i class="fa fa-hand-o-right" aria-hidden="true"></i> This is a
+                    <label>{{ $product->category->category_name }}</label> product.
                 </p>
                 <ul>
-                    <li>
-                        Best for Biryani and Pulao.
-                    </li>
-                    <li>
-                        After cooking, Zeeba Basmati rice grains attain an extra ordinary length of upto 2.4 cm/~1 inch.
-                    </li>
-                    <li>
-                        Zeeba Basmati rice adheres to the highest food afety standards as your health is paramount to
-                        us.
-                    </li>
-                    <li>
-                        Contains only the best and purest grade of basmati rice grain of Export quality.
-                    </li>
+                    @foreach($product->description_list as $descriptionItem)
+                        <li>{{ $descriptionItem }}</li>
+                    @endforeach
                 </ul>
+
                 <p>
                     <i class="fa fa-refresh" aria-hidden="true"></i>All food products are
                     <label>non-returnable.</label>
@@ -71,13 +62,10 @@
                         <fieldset>
                             <input type="hidden" name="cmd" value="_cart" />
                             <input type="hidden" name="add" value="1" />
-                            <input type="hidden" name="business" value=" " />
                             <input type="hidden" name="item_name" value="{{$product->product_name}}" />
                             <input type="hidden" name="amount" value="{{$product->sell_price}}" />
                             <input type="hidden" name="discount_amount" value="1.00" />
-                            <input type="hidden" name="currency_code" value="USD" />
-                            <input type="hidden" name="return" value=" " />
-                            <input type="hidden" name="cancel_return" value=" " />
+                            <input type="hidden" name="currency_code" value="BDT" />
                             <input type="submit" name="submit" value="Add to cart" class="button" />
                         </fieldset>
                     </form>

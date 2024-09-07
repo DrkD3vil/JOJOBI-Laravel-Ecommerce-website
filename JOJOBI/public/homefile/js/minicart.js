@@ -2413,12 +2413,13 @@ var currencies = {
     VEF: { before: 'Bs' },
     VND: { before: '\u20ab' },
     XCD: { before: '$', code: true },
-    ZAR: { before: 'R' }
+    ZAR: { before: 'R' },
+    BDT: { before: '৳', code: true },
 };
 
 
 module.exports = function currency(amount, config) {
-    var code = config && config.currency || 'USD',
+    var code = config && config.currency || 'BDT',
         value = currencies[code],
         before = value.before || '',
         after = value.after || '',
