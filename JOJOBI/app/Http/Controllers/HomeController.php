@@ -87,6 +87,67 @@ class HomeController extends Controller
     }
 
 
+    public function logged_dashboard(Request $request)
+    {
+        // Number of products to display per page for "Show More"
+        $perPage = 3;
+
+        // Search for products
+        $searchQuery = trim($request->get('search', ''));
+
+        // Prepare an array to hold category-wise products
+        $categoryProducts = [];
+
+        if (!empty($searchQuery)) {
+            // Get categories that have products matching the search query
+            $categories = Category::whereHas('products', function ($query) use ($searchQuery) {
+                $query->where('product_name', 'LIKE', "%{$searchQuery}%")
+                    ->orWhere('description', 'LIKE', "%{$searchQuery}%");
+            })->get();
+
+            foreach ($categories as $category) {
+                $products = $category->products()
+                    ->where(function ($query) use ($searchQuery) {
+                        $query->where('product_name', 'LIKE', "%{$searchQuery}%")
+                            ->orWhere('description', 'LIKE', "%{$searchQuery}%");
+                    })
+                    ->latest()
+                    ->paginate($perPage);
+
+                $categoryProducts[$category->category_name] = $products;
+            }
+        } else {
+            // Fetch all categories in random order
+            $categories = Category::inRandomOrder()->take(3)->get();
+
+            foreach ($categories as $category) {
+                $products = $category->products()
+                    ->latest()
+                    ->paginate($perPage);
+
+                $categoryProducts[$category->category_name] = $products;
+            }
+        }
+
+        // Handle AJAX requests for "Show More" functionality
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('home.products.topProducts', compact('categoryProducts'))->render()
+            ]);
+        }
+
+        // Fetch products that have a discount
+        $specialOffers = Product::where('discount', '>', 0)
+            ->orderBy('created_at', 'desc') // Order by latest products
+            ->take(10) // Limit to 10 products for the offers section
+            ->get();
+
+
+        return view('home.index', compact('categoryProducts', 'specialOffers'));
+    }
+    
+
+
     public function allProductsByCategory($categoryid, Request $request)
     {
         $perPage = 4; // Number of products per page
